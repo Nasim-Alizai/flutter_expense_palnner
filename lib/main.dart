@@ -43,9 +43,9 @@ class MyHomePage extends StatelessWidget {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            Container(
+            const SizedBox(
               width: double.infinity,
-              child: const Card(
+              child: Card(
                 color: Colors.brown,
                 elevation: 5,
                 child: Text("this is Nasim"),
