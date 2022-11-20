@@ -4,6 +4,7 @@ class NewTransaction extends StatelessWidget {
   final titleController = TextEditingController();
   final amountController = TextEditingController();
   final Function newTransaction;
+
   NewTransaction(this.newTransaction);
 
   @override
@@ -28,10 +29,12 @@ class NewTransaction extends StatelessWidget {
                   foregroundColor:
                       MaterialStateProperty.all<Color>(Colors.purple),
                 ),
-                onPressed: newTransaction(
-                  titleController.text,
-                  double.parse(amountController.text),
-                ),
+                onPressed: () {
+                  newTransaction(
+                    titleController.text,
+                    double.parse(amountController.text),
+                  );
+                },
                 child: const Text("Add Transaction"))
           ],
         ),
