@@ -34,6 +34,10 @@ class MyHomePage extends StatelessWidget {
       date: DateTime.now(),
     )
   ];
+
+  final titleController = TextEditingController();
+  final amountController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +45,7 @@ class MyHomePage extends StatelessWidget {
           title: const Text('Expense Planner'),
         ),
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          // mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             const SizedBox(
               width: double.infinity,
@@ -49,6 +53,32 @@ class MyHomePage extends StatelessWidget {
                 color: Colors.brown,
                 elevation: 5,
                 child: Text("this is Nasim"),
+              ),
+            ),
+            Card(
+              elevation: 5,
+              child: Container(
+                margin: const EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    TextField(
+                      decoration: const InputDecoration(labelText: 'title'),
+                      controller: titleController,
+                    ),
+                    TextField(
+                      decoration: const InputDecoration(labelText: 'amount'),
+                      controller: amountController,
+                    ),
+                    TextButton(
+                        style: ButtonStyle(
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(Colors.purple),
+                        ),
+                        onPressed: () {},
+                        child: const Text("Add Transaction"))
+                  ],
+                ),
               ),
             ),
             Column(
