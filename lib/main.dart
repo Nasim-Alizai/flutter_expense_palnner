@@ -24,6 +24,13 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Expense Planner'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            tooltip: 'Increase volume by 10',
+            onPressed: () {},
+          ),
+        ],
       ),
       body: Column(
         // mainAxisAlignment: MainAxisAlignment.spaceAround,
