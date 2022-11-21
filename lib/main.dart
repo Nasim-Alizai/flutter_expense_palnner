@@ -13,9 +13,15 @@ class MyApp extends StatelessWidget {
       title: 'Flutter App',
       home: MyHomePage(),
       theme: ThemeData(
-        primarySwatch: Colors.purple,
-        fontFamily: 'Quicksand',
-      ),
+          primarySwatch: Colors.purple,
+          fontFamily: 'Quicksand',
+          appBarTheme: const AppBarTheme(
+            titleTextStyle: TextStyle(
+              fontFamily: 'OpenSans',
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          )),
     );
   }
 }
