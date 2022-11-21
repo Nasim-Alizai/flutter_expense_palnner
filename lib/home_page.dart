@@ -64,6 +64,14 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _deleteTrans(String id) {
+    setState(() {
+      _userTransactions.removeWhere((element) {
+        return element.id == id;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,9 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Chart(_recentTrans),
-            TransactionList(
-              _userTransactions,
-            ),
+            TransactionList(_userTransactions, _deleteTrans),
           ],
         ),
       ),
