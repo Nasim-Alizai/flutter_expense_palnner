@@ -56,6 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
         title: const Text('Expense Planner'),
         actions: [
           IconButton(
@@ -68,10 +69,10 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         // mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          const SizedBox(
+          SizedBox(
             width: double.infinity,
             child: Card(
-              color: Colors.brown,
+              color: Theme.of(context).primaryColor,
               elevation: 5,
               child: Text("this is Nasim"),
             ),
