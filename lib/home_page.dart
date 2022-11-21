@@ -40,6 +40,8 @@ class _MyHomePageState extends State<MyHomePage> {
     )
   ];
 
+  bool _showGraph = false;
+
   List<Transactions> get _recentTrans {
     return _userTransactions.where((tx) {
       return tx.date.isAfter(
@@ -74,6 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final land = MediaQuery.of(context).orientation == Orientation.landscape;
     final appBar = AppBar(
       backgroundColor: Theme.of(context).primaryColor,
       title: const Text('Expense Planner'),
@@ -86,26 +89,54 @@ class _MyHomePageState extends State<MyHomePage> {
       ],
     );
 
+    final txListWidget = Container(
+      height: (MediaQuery.of(context).size.height -
+              appBar.preferredSize.height -
+              MediaQuery.of(context).padding.top) *
+          0.7,
+      child: TransactionList(_userTransactions, _deleteTrans),
+    );
+
     return Scaffold(
       appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            Container(
-              height: (MediaQuery.of(context).size.height -
-                      appBar.preferredSize.height -
-                      MediaQuery.of(context).padding.top) *
-                  0.3,
-              child: Chart(_recentTrans),
-            ),
-            Container(
-              height: (MediaQuery.of(context).size.height -
-                      appBar.preferredSize.height -
-                      MediaQuery.of(context).padding.top) *
-                  0.7,
-              child: TransactionList(_userTransactions, _deleteTrans),
-            ),
+            if (land)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("show Graph"),
+                  Switch(
+                    value: _showGraph,
+                    onChanged: (val) {
+                      setState(() {
+                        _showGraph = val;
+                      });
+                    },
+                  )
+                ],
+              ),
+            if (land)
+              _showGraph
+                  ? Container(
+                      height: (MediaQuery.of(context).size.height -
+                              appBar.preferredSize.height -
+                              MediaQuery.of(context).padding.top) *
+                          0.7,
+                      child: Chart(_recentTrans),
+                    )
+                  : txListWidget,
+            if (!land)
+              Container(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
+                        MediaQuery.of(context).padding.top) *
+                    0.3,
+                child: Chart(_recentTrans),
+              ),
+            if (!land) txListWidget,
           ],
         ),
       ),
