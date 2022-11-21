@@ -1,11 +1,28 @@
 import 'package:flutter/material.dart';
 
-class NewTransaction extends StatelessWidget {
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
+class NewTransaction extends StatefulWidget {
   final Function newTransaction;
 
   NewTransaction(this.newTransaction);
+
+  @override
+  State<NewTransaction> createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
+  final titleController = TextEditingController();
+  final amountController = TextEditingController();
+
+  void submitData() {
+    final enteredTitle = titleController.text;
+    final enteredDate = double.parse(amountController.text);
+
+    widget.newTransaction(
+      enteredTitle,
+      enteredDate,
+    );
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +46,7 @@ class NewTransaction extends StatelessWidget {
                   foregroundColor:
                       MaterialStateProperty.all<Color>(Colors.purple),
                 ),
-                onPressed: () {
-                  newTransaction(
-                    titleController.text,
-                    double.parse(amountController.text),
-                  );
-                },
+                onPressed: submitData,
                 child: const Text("Add Transaction"))
           ],
         ),
