@@ -77,13 +77,13 @@ flutter:
   fonts:
     - family: OpensSans
       fonts:
-        - asset: /assets/fonts/OpenSans-Medium.ttf
-        - asset: assets/fonts/OpenSana-Bold.ttf
+        - asset: ./assets/fonts/OpenSans-Medium.ttf
+        - asset: ./assets/fonts/OpenSans-Bold.ttf
           weight: 700
     - family: Quicksand
       fonts:
-        - asset: fonts/Quicksand-Regular.ttf
-        - asset: fonts/Quicksand-Light.ttf
+        - asset: ./assets/fonts/Quicksand-Regular.ttf
+        - asset: ./assets/fonts/Quicksand-Light.ttf
           weight: 700
   #
   # For details regarding fonts from package dependencies,
