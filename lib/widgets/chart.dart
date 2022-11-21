@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_expense_palnner/models/transactions.dart';
+import 'package:flutter_expense_palnner/widgets/chart_bar.dart';
 import 'package:intl/intl.dart';
 
 class Chart extends StatelessWidget {
@@ -22,9 +23,15 @@ class Chart extends StatelessWidget {
         }
       }
       return {
-        'day': DateFormat.E().format(weekDay).substring(0, 1),
+        'day': DateFormat.E().format(weekDay).substring(0, 2),
         'amount': amountSum,
       };
+    });
+  }
+
+  double get maxSpending {
+    return maptrans.fold(0.0, (sum, item) {
+      return sum + (item['amount'] as double);
     });
   }
 
@@ -35,7 +42,11 @@ class Chart extends StatelessWidget {
       margin: EdgeInsets.all(10),
       child: Row(
         children: maptrans.map((e) {
-          return Text('${e['day']}: ${e['amount'].toString()}');
+          return ChartBar(
+            e['day'].toString(),
+            (e['amount'] as double),
+            maxSpending == 0.0 ? 0.0 : (e['amount'] as double) / maxSpending,
+          );
         }).toList(),
       ),
     );
