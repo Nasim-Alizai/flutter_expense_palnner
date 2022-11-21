@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../models/transactions.dart';
+import 'package:flutter_expense_palnner/models/transactions.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transactions> userTransactions;
@@ -15,11 +15,11 @@ class TransactionList extends StatelessWidget {
         ? LayoutBuilder(builder: (cts, cnt) {
             return Column(
               children: [
-                Text("No transactions added yet !"),
-                SizedBox(
+                const Text("No transactions added yet !"),
+                const SizedBox(
                   height: 10,
                 ),
-                Container(
+                SizedBox(
                   height: cnt.maxHeight * 0.6,
                   child: Image.asset(
                     'assets/images/waiting.png',
@@ -33,12 +33,12 @@ class TransactionList extends StatelessWidget {
             itemBuilder: (ctx, index) {
               return Card(
                 elevation: 5,
-                margin: EdgeInsets.symmetric(vertical: 6, horizontal: 5),
+                margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 5),
                 child: ListTile(
                   leading: CircleAvatar(
                     radius: 30,
                     child: Padding(
-                      padding: EdgeInsets.all(6),
+                      padding: const EdgeInsets.all(6),
                       child: FittedBox(
                           child: Text('\$${userTransactions[index].amount}')),
                     ),
@@ -53,12 +53,12 @@ class TransactionList extends StatelessWidget {
                   subtitle: Text(
                     DateFormat.yMMMd().format(userTransactions[index].date),
                   ),
-                  trailing: MediaQuery.of(context).size.width > 400
+                  trailing: MediaQuery.of(context).size.width > 460
                       ? TextButton.icon(
                           onPressed: () =>
                               deteleTrans(userTransactions[index].id),
-                          icon: Icon(Icons.delete),
-                          label: Text("Delete"),
+                          icon: const Icon(Icons.delete),
+                          label: const Text("Delete"),
                           style: ButtonStyle(
                             backgroundColor:
                                 MaterialStateProperty.all<Color>(Colors.purple),
@@ -67,7 +67,7 @@ class TransactionList extends StatelessWidget {
                           ),
                         )
                       : IconButton(
-                          icon: Icon(Icons.delete),
+                          icon: const Icon(Icons.delete),
                           color: Colors.red,
                           onPressed: () =>
                               deteleTrans(userTransactions[index].id),

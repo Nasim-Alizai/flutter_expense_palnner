@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import './widgets/chart.dart';
 import './widgets/new_transaction.dart';
@@ -5,7 +7,7 @@ import './widgets/Transaction_list.dart';
 import './models/transactions.dart';
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({super.key});
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -18,8 +20,8 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (_) {
         return GestureDetector(
           onTap: () {},
-          child: NewTransaction(_addNewTransaction),
           behavior: HitTestBehavior.opaque,
+          child: NewTransaction(_addNewTransaction),
         );
       },
     );
@@ -46,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return _userTransactions.where((tx) {
       return tx.date.isAfter(
         DateTime.now().subtract(
-          Duration(days: 7),
+          const Duration(days: 7),
         ),
       );
     }).toList();
@@ -76,30 +78,44 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final mdQuery = MediaQuery.of(context);
     final land = MediaQuery.of(context).orientation == Orientation.landscape;
-    final appBar = AppBar(
-      backgroundColor: Theme.of(context).primaryColor,
-      title: const Text('Expense Planner'),
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.add),
-          tooltip: 'Increase volume by 10',
-          onPressed: () => _startAddNewTransaction(context),
-        ),
-      ],
-    );
 
-    final txListWidget = Container(
-      height: (MediaQuery.of(context).size.height -
+    final PreferredSizeWidget appBar = (Platform.isIOS
+        ? CupertinoNavigationBar(
+            middle: const Text("Personal Expense"),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                GestureDetector(
+                  onTap: () => _startAddNewTransaction(context),
+                  child: const Icon(CupertinoIcons.add),
+                )
+              ],
+            ),
+          )
+        : AppBar(
+            backgroundColor: Theme.of(context).primaryColor,
+            title: const Text('Expense Planner'),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.add),
+                tooltip: 'Increase volume by 10',
+                onPressed: () => _startAddNewTransaction(context),
+              ),
+            ],
+          ) as PreferredSizeWidget);
+
+    final txListWidget = SizedBox(
+      height: (mdQuery.size.height -
               appBar.preferredSize.height -
-              MediaQuery.of(context).padding.top) *
+              mdQuery.padding.top) *
           0.7,
       child: TransactionList(_userTransactions, _deleteTrans),
     );
 
-    return Scaffold(
-      appBar: appBar,
-      body: SingleChildScrollView(
+    final pageBody = SafeArea(
+      child: SingleChildScrollView(
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
@@ -107,8 +123,15 @@ class _MyHomePageState extends State<MyHomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("show Graph"),
-                  Switch(
+                  const Text(
+                    "show Graph",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontFamily: "Quicksand",
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Switch.adaptive(
                     value: _showGraph,
                     onChanged: (val) {
                       setState(() {
@@ -120,19 +143,19 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             if (land)
               _showGraph
-                  ? Container(
-                      height: (MediaQuery.of(context).size.height -
+                  ? SizedBox(
+                      height: (mdQuery.size.height -
                               appBar.preferredSize.height -
-                              MediaQuery.of(context).padding.top) *
+                              mdQuery.padding.top) *
                           0.7,
                       child: Chart(_recentTrans),
                     )
                   : txListWidget,
             if (!land)
-              Container(
-                height: (MediaQuery.of(context).size.height -
+              SizedBox(
+                height: (mdQuery.size.height -
                         appBar.preferredSize.height -
-                        MediaQuery.of(context).padding.top) *
+                        mdQuery.padding.top) *
                     0.3,
                 child: Chart(_recentTrans),
               ),
@@ -140,11 +163,24 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _startAddNewTransaction(context),
-        child: const Icon(Icons.add),
-      ),
     );
+
+    return Platform.isIOS
+        ? CupertinoPageScaffold(
+            navigationBar: (appBar as ObstructingPreferredSizeWidget),
+            child: pageBody,
+          )
+        : Scaffold(
+            appBar: appBar,
+            body: pageBody,
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerDocked,
+            floatingActionButton: Platform.isIOS
+                ? Container()
+                : FloatingActionButton(
+                    onPressed: () => _startAddNewTransaction(context),
+                    child: const Icon(Icons.add),
+                  ),
+          );
   }
 }

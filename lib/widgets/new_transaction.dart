@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 class NewTransaction extends StatefulWidget {
   final Function newTransaction;
 
-  NewTransaction(this.newTransaction);
+  const NewTransaction(this.newTransaction);
 
   @override
   State<NewTransaction> createState() => _NewTransactionState();
@@ -23,7 +23,7 @@ class _NewTransactionState extends State<NewTransaction> {
     final enteredTitle = _titleController.text;
     final enteredAmount = double.parse(_amountController.text);
 
-    if (enteredTitle.isEmpty || enteredAmount <= 0 || _selectedDate == null) {
+    if (enteredTitle.isEmpty || enteredAmount <= 0) {
       return;
     }
 
@@ -49,7 +49,6 @@ class _NewTransactionState extends State<NewTransaction> {
         _selectedDate = pickedDate;
       });
     });
-    print('...');
   }
 
   @override
@@ -75,15 +74,13 @@ class _NewTransactionState extends State<NewTransaction> {
                 decoration: const InputDecoration(labelText: 'amount'),
                 controller: _amountController,
               ),
-              Container(
+              SizedBox(
                 height: 70,
                 child: Row(
                   children: <Widget>[
                     Expanded(
                       child: Text(
-                        _selectedDate == null
-                            ? 'No Date Chosen!'
-                            : 'Picked Date: ${DateFormat.yMd().format(_selectedDate)}',
+                        'Picked Date: ${DateFormat.yMd().format(_selectedDate)}',
                       ),
                     ),
                     TextButton(
@@ -91,13 +88,13 @@ class _NewTransactionState extends State<NewTransaction> {
                         foregroundColor:
                             MaterialStateProperty.all<Color>(Colors.purple),
                       ),
-                      child: Text(
+                      onPressed: _presentDatePicker,
+                      child: const Text(
                         'Choose Date',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      onPressed: _presentDatePicker,
                     ),
                   ],
                 ),
