@@ -26,18 +26,18 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   final List<Transactions> _userTransactions = [
-    // Transactions(
-    //   id: 't1',
-    //   title: "new shoes",
-    //   amount: 99.9,
-    //   date: DateTime.now(),
-    // ),
-    // Transactions(
-    //   id: 't2',
-    //   title: "new book",
-    //   amount: 9.98,
-    //   date: DateTime.now(),
-    // )
+    Transactions(
+      id: 't1',
+      title: "new shoes",
+      amount: 99.9,
+      date: DateTime.now(),
+    ),
+    Transactions(
+      id: 't2',
+      title: "new book",
+      amount: 9.98,
+      date: DateTime.now(),
+    )
   ];
 
   List<Transactions> get _recentTrans {
