@@ -1,5 +1,5 @@
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
-
 import '../models/transactions.dart';
 import './transaction_item.dart';
 
@@ -8,7 +8,7 @@ class TransactionList extends StatelessWidget {
 
   final Function deteleTrans;
 
-  const TransactionList(this.userTransactions, this.deteleTrans);
+  const TransactionList(this.userTransactions, this.deteleTrans, {super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 class NewTransaction extends StatefulWidget {
   final Function newTransaction;
 
-  const NewTransaction(this.newTransaction);
+  const NewTransaction(this.newTransaction, {super.key});
 
   @override
   State<NewTransaction> createState() => _NewTransactionState();
